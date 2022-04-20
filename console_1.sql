@@ -319,37 +319,39 @@ SELECT SUM(total_amount) AS SumOfAllOrders2014 FROM orders WHERE order_date BETW
 -- 7) Найти среднюю стоимость всех заказов
 SELECT AVG(total_amount) AS AverageOfOrders FROM orders;
 
--- 8) Найти среднюю стоимость всех заказов по каждому клиенту
+-- 8) Найти среднюю стоимость всех заказов по каждому клиенту FIXME
 
 
 -- 9) Найти всех клиентов, которые живут в Бразилии или Испании
 SELECT * FROM customer WHERE country='Brazil' OR country='Spain';
 
 
--- 10 Найти все заказы между 2013ым и 2014ым годами, которые стоили меньше 100.00$
+-- 10 Найти все заказы между 2013ым и 2014ым годами, которые стоили меньше 100.00$ FIXME
 SELECT * FROM orders WHERE order_date BETWEEN 'Dec 31 2013 'AND 'Jan 01 2015';
 
 
 
 -- 11) Найти всех клиентов, которые в одной из стран: Испания, Италия, Германия, Франция. Отсортируйте по странам
---
---
+SELECT * FROM customer WHERE country IN ('Spain','Italy','Germany','France');
+
+
 -- 12) Найти все страны клиентов, страны которых содержаться в таблице поставщиков
---
---
+SELECT customer.country,supplier.country FROM customer INNER JOIN supplier ON customer.country=supplier.country;
+
 -- 13) Найти всех клиентов, имена которых начинаются на ‘Jo’
---
---
+SELECT * FROM customer WHERE first_name LIKE 'Jo%';
+
 -- 14) Найти всех клиентов, имена которых заканчиваются на ‘a’ и имеют длину ровно 4 символа
---
---
+SELECT * FROM customer WHERE first_name LIKE '%a' AND LENGTH(first_name)=4;
+
 -- 15) Найти количество клиентов по странам
---
---
+SELECT country,COUNT(*) FROM customer GROUP BY country ORDER BY COUNT(*);
+
 -- 16) Найти количество клиентов по странам. Вывести в порядке убывания
---
---
+SELECT country,COUNT(*) FROM customer GROUP BY country ORDER BY COUNT(*) DESC;
+
 -- 17) Найти общую сумму стоимости заказов и количество заказов по каждому клиенту (customer_id). Отсортировать по сумме
---
---
+SELECT customer_id,SUM(total_amount),COUNT(*) FROM orders GROUP BY customer_id ORDER BY SUM(total_amount);
+
+
 -- 18) Найти общую сумму стоимости заказов и количество заказов по каждому клиенту (customer_id), у которых общее количество заказов больше 20ти

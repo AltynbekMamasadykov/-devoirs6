@@ -319,20 +319,19 @@ SELECT SUM(total_amount) AS SumOfAllOrders2014 FROM orders WHERE order_date BETW
 -- 7) Найти среднюю стоимость всех заказов
 SELECT AVG(total_amount) AS AverageOfOrders FROM orders;
 
--- 8) Найти среднюю стоимость всех заказов по каждому клиенту FIXME
-
+-- 8) Найти среднюю стоимость всех заказов по каждому клиенту
+SELECT first_name,AVG(total_amount) AS AverageOfOrders FROM orders JOIN customer c ON orders.customer_id = c.id GROUP BY c.first_name;
 
 -- 9) Найти всех клиентов, которые живут в Бразилии или Испании
 SELECT * FROM customer WHERE country='Brazil' OR country='Spain';
 
 
--- 10 Найти все заказы между 2013ым и 2014ым годами, которые стоили меньше 100.00$ FIXME
-SELECT * FROM orders WHERE order_date BETWEEN 'Dec 31 2013 'AND 'Jan 01 2015';
-
+-- 10 Найти все заказы между 2013ым и 2014ым годами, которые стоили меньше 100.00$
+SELECT * FROM orders WHERE order_date BETWEEN 'Dec 31 2013 'AND 'Jan 01 2015' AND total_amount < 100 ORDER BY total_amount;
 
 
 -- 11) Найти всех клиентов, которые в одной из стран: Испания, Италия, Германия, Франция. Отсортируйте по странам
-SELECT * FROM customer WHERE country IN ('Spain','Italy','Germany','France');
+SELECT * FROM customer WHERE country IN ('Spain','Italy','Germany','France') ORDER BY country;
 
 
 -- 12) Найти все страны клиентов, страны которых содержаться в таблице поставщиков
@@ -353,5 +352,5 @@ SELECT country,COUNT(*) FROM customer GROUP BY country ORDER BY COUNT(*) DESC;
 -- 17) Найти общую сумму стоимости заказов и количество заказов по каждому клиенту (customer_id). Отсортировать по сумме
 SELECT customer_id,SUM(total_amount),COUNT(*) FROM orders GROUP BY customer_id ORDER BY SUM(total_amount);
 
-
 -- 18) Найти общую сумму стоимости заказов и количество заказов по каждому клиенту (customer_id), у которых общее количество заказов больше 20ти
+SELECT customer_id,SUM(total_amount),COUNT(*) FROM orders GROUP BY customer_id HAVING COUNT(*)>20;
